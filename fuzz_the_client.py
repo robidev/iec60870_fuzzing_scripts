@@ -36,13 +36,13 @@ CS101_ASDU_i = POINTER(struct_anon_6)
 
 class My104Stack(IEC60870_5_104_server):
 
-    def __init__(self):
+    def __init__(self, ip="0.0.0.0"):
       self.fuzzer = None
       self.backup_d = []
       self.backup_p = None
       self.backup_s = 0
       self.logger = logging.getLogger('kitty') 
-      super(My104Stack, self).__init__()
+      super(My104Stack, self).__init__(ip)
 
     def set_fuzzer(self, fuzzer):
       self.fuzzer = fuzzer
@@ -208,8 +208,8 @@ get_ASDU = Template(name='get_ASDU', fields=[
 target = ClientTarget(name='104Target')
 controller = ClientProcessController(
         "simple_client_single",
-        "./simple_client_single",
-        ["127.0.0.1"]
+        "./simple_client_fast",
+        ["10.84.134.10"]
     )
 target.set_controller(controller)
 target.set_mutation_server_timeout(20)
@@ -217,8 +217,9 @@ target.set_mutation_server_timeout(20)
 
 model = GraphModel()
 model.connect(get_startdt)
-model.connect(get_startdt, get_ASDU)
 #model.connect(get_startdt, get_stopdt)
+model.connect(get_startdt, get_ASDU)
+
 #model.connect(get_startdt, get_testfr)
 #model.connect(get_testfr, get_stopdt)
 
@@ -228,7 +229,7 @@ fuzzer.set_target(target)
 fuzzer.set_interface(WebInterface(host='0.0.0.0', port=26000))
 fuzzer.set_delay_between_tests(0.1)
 
-my_stack = My104Stack()
+my_stack = My104Stack("10.84.69.44")
 my_stack.set_fuzzer(fuzzer)
 fuzzer.start()
 my_stack.start()
