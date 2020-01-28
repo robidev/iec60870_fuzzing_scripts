@@ -1,0 +1,3 @@
+[submodule "pylib60870"]
+	path = pylib60870
+	url = https://github.com/robidev/pylib60870

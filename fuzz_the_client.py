@@ -8,7 +8,7 @@ from kitty.fuzzers import ClientFuzzer
 from kitty.model import GraphModel, Template
 from kitty.model.low_level.aliases import *
 from kitty.model.low_level.field import *
-from lib104_server_class import *
+from pylib60870.lib104_server_class import *
 
 
 ################# Modified Stack #################
